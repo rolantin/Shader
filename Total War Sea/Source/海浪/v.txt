@@ -1,0 +1,35 @@
+#version 100
+
+
+attribute vec4 _glesVertex;
+attribute vec4 _glesColor;
+attribute vec3 _glesNormal;
+attribute vec4 _glesMultiTexCoord0;
+uniform highp vec4 _Time;
+uniform highp mat4 glstate_matrix_mvp;
+uniform highp vec4 _VertexWaveAmplitudeSpeed;
+varying highp vec4 xlv_COLOR;
+varying highp vec2 xlv_TEXCOORD0;
+varying highp vec3 xlv_TEXCOORD2;
+void main ()
+{
+  lowp vec4 tmpvar_1;
+  tmpvar_1 = _glesColor;
+  highp vec4 vertex_2;
+  highp vec4 tmpvar_3;
+  vertex_2.w = _glesVertex.w;
+  highp float tmpvar_4;
+  tmpvar_4 = ((normalize(_glesVertex.xyz) * _Time.y) * 10.0).x;
+  vertex_2.x = (_glesVertex.x + (sin(
+    (tmpvar_4 * _VertexWaveAmplitudeSpeed.z)
+  ) * _VertexWaveAmplitudeSpeed.x));
+  vertex_2.y = (_glesVertex.y + 0.5);
+  vertex_2.z = (_glesVertex.z + (sin(
+    (tmpvar_4 * _VertexWaveAmplitudeSpeed.w)
+  ) * _VertexWaveAmplitudeSpeed.y));
+  tmpvar_3 = tmpvar_1;
+  gl_Position = (glstate_matrix_mvp * vertex_2);
+  xlv_COLOR = tmpvar_3;
+  xlv_TEXCOORD0 = _glesMultiTexCoord0.xy;
+  xlv_TEXCOORD2 = _glesNormal;
+}

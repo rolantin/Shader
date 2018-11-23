@@ -1,0 +1,53 @@
+#version 100
+
+
+precision highp float;
+uniform highp vec4 _Time;
+uniform sampler2D _WaveMap;
+uniform sampler2D _MaskMap;
+uniform highp float _Intensity;
+uniform highp float _Amplitude;
+uniform highp float _Speed;
+uniform highp vec3 _LightDirection;
+varying highp vec4 xlv_COLOR;
+varying highp vec2 xlv_TEXCOORD0;
+varying highp vec3 xlv_TEXCOORD2;
+void main ()
+{
+  highp float mask_1;
+  highp float wave1_2;
+  highp float wave0_3;
+  highp float tmpvar_4;
+  tmpvar_4 = (_Time.y * _Speed);
+  highp vec2 tmpvar_5;
+  highp vec2 tmpvar_6;
+  tmpvar_6 = (xlv_TEXCOORD0 + vec2(0.0, 0.5));
+  tmpvar_5 = (tmpvar_6 + ((vec2(0.0, 1.0) * 
+    sin(tmpvar_4)
+  ) * _Amplitude));
+  highp vec2 tmpvar_7;
+  tmpvar_7 = (tmpvar_6 + ((vec2(0.0, 1.0) * 
+    sin((tmpvar_4 + 3.14))
+  ) * _Amplitude));
+  lowp float tmpvar_8;
+  tmpvar_8 = texture2D (_WaveMap, tmpvar_5).w;
+  wave0_3 = tmpvar_8;
+  lowp float tmpvar_9;
+  tmpvar_9 = texture2D (_WaveMap, tmpvar_7).w;
+  wave1_2 = tmpvar_9;
+  lowp float tmpvar_10;
+  tmpvar_10 = texture2D (_MaskMap, xlv_TEXCOORD0).x;
+  mask_1 = tmpvar_10;
+  highp vec4 tmpvar_11;
+  tmpvar_11.xyz = vec3(1.0, 1.0, 1.0);
+  tmpvar_11.w = (((
+    ((wave0_3 * (xlv_COLOR.w * (
+      sin((tmpvar_4 + 0.5495))
+     + 1.0))) + (wave1_2 * (xlv_COLOR.w * (
+      sin((tmpvar_4 + 3.768))
+     + 1.0))))
+   * 
+    (dot (xlv_TEXCOORD2, _LightDirection) + 1.0)
+  ) * _Intensity) * clamp ((mask_1 * 2.0), 0.0, 1.0));
+  gl_FragData[0] = tmpvar_11;
+}

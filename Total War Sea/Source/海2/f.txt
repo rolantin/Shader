@@ -1,0 +1,129 @@
+#version 100
+
+
+precision highp float;
+uniform highp vec3 _WorldSpaceCameraPos;
+uniform mediump vec4 _LightShadowData;
+uniform lowp vec4 unity_FogColor;
+uniform highp sampler2D _ShadowMapTexture;
+uniform sampler2D _NormalMap;
+uniform sampler2D _MaskMap;
+uniform highp vec4 _Wave1;
+uniform highp vec4 _Wave2;
+uniform highp vec4 _Wave3;
+uniform highp vec4 _Wave4;
+uniform highp float _SparklingSpecularWidth;
+uniform highp float _SparklingSpecularContrast;
+uniform highp float _SparklingSpecularPower;
+uniform highp float _SparklingSpecularScale;
+uniform highp vec4 _SunColor;
+uniform highp vec4 _SunSpecular;
+uniform highp float _SunPower;
+uniform highp float _MaskTiling;
+uniform highp float _MaskConstrast;
+uniform highp float _MaskIntensity;
+uniform sampler2D _ReflectionTex;
+varying highp vec4 xlv_COLOR;
+varying highp vec4 xlv_TEXCOORD0;
+varying highp vec4 xlv_TEXCOORD1;
+varying highp vec4 xlv_TEXCOORD2;
+varying highp vec3 xlv_TEXCOORD3;
+varying highp vec3 xlv_TEXCOORD4;
+varying highp vec4 xlv_TEXCOORD5;
+varying mediump vec4 xlv_TEXCOORD6;
+varying highp float xlv_TEXCOORD7;
+void main ()
+{
+  highp vec4 retColor_1;
+  highp float alpha_2;
+  highp float maskAlpha_3;
+  highp vec3 sun_4;
+  highp float bright_5;
+  mediump vec3 h_6;
+  highp vec3 color_7;
+  highp vec4 normal_TS4_8;
+  highp vec4 normal_TS3_9;
+  highp vec4 normal_TS2_10;
+  highp vec4 normal_TS1_11;
+  lowp vec4 tmpvar_12;
+  tmpvar_12 = ((texture2D (_NormalMap, xlv_TEXCOORD1.xy) * 2.0) - 1.0);
+  normal_TS1_11 = tmpvar_12;
+  lowp vec4 tmpvar_13;
+  tmpvar_13 = ((texture2D (_NormalMap, xlv_TEXCOORD1.zw) * 2.0) - 1.0);
+  normal_TS2_10 = tmpvar_13;
+  lowp vec4 tmpvar_14;
+  tmpvar_14 = ((texture2D (_NormalMap, xlv_TEXCOORD2.xy) * 2.0) - 1.0);
+  normal_TS3_9 = tmpvar_14;
+  lowp vec4 tmpvar_15;
+  tmpvar_15 = ((texture2D (_NormalMap, xlv_TEXCOORD2.zw) * 2.0) - 1.0);
+  normal_TS4_8 = tmpvar_15;
+  highp vec4 tmpvar_16;
+  tmpvar_16 = normalize(((
+    ((normal_TS1_11 * _Wave1.z) + (normal_TS2_10 * _Wave2.z))
+   + 
+    (normal_TS3_9 * _Wave3.z)
+  ) + (normal_TS4_8 * _Wave4.z)));
+  highp float tmpvar_17;
+  tmpvar_17 = normalize((xlv_TEXCOORD5.xyz - _WorldSpaceCameraPos)).z;
+  highp vec3 tmpvar_18;
+  tmpvar_18.x = _SparklingSpecularWidth;
+  tmpvar_18.y = _SparklingSpecularWidth;
+  tmpvar_18.z = _SparklingSpecularContrast;
+  highp float tmpvar_19;
+  tmpvar_19 = pow (clamp (dot (tmpvar_16.xyz, tmpvar_18), 0.0, 1.0), _SparklingSpecularPower);
+  lowp vec4 tmpvar_20;
+  highp vec2 P_21;
+  P_21 = (xlv_TEXCOORD4.xy + ((tmpvar_16.xz * tmpvar_16.y) * 0.25));
+  tmpvar_20 = texture2D (_ReflectionTex, P_21);
+  color_7 = (xlv_COLOR.xyz + ((tmpvar_20.xyz * xlv_TEXCOORD0.x) * pow (
+    (tmpvar_17 + 0.15)
+  , 8.0)));
+  highp vec3 tmpvar_22;
+  tmpvar_22 = normalize((vec3(0.8374783, 0.1570272, 0.5234239) + xlv_TEXCOORD3));
+  h_6 = tmpvar_22;
+  mediump float tmpvar_23;
+  tmpvar_23 = max (0.0, h_6.z);
+  bright_5 = tmpvar_23;
+  sun_4 = ((vec3(pow (bright_5, _SunPower)) * (_SunColor.xyz + 
+    ((tmpvar_19 * _SunSpecular) * (100.0 * _SunSpecular.w))
+  .xyz)) * vec3(pow ((tmpvar_17 + 0.1), 16.0)));
+  highp vec2 P_24;
+  P_24 = (xlv_TEXCOORD0.zw * _MaskTiling);
+  lowp float tmpvar_25;
+  tmpvar_25 = texture2D (_MaskMap, P_24).x;
+  maskAlpha_3 = tmpvar_25;
+  alpha_2 = xlv_COLOR.w;
+  if ((xlv_COLOR.w < 1.0)) {
+    maskAlpha_3 = (((maskAlpha_3 - 0.5) * (_MaskConstrast + 1.0)) + 0.5);
+    maskAlpha_3 = (maskAlpha_3 * _MaskIntensity);
+    highp float tmpvar_26;
+    tmpvar_26 = (1.0 - clamp (pow (
+      (1.0 - xlv_COLOR.w)
+    , 
+      (8.0 * xlv_TEXCOORD5.w)
+    ), 0.0, 1.0));
+    alpha_2 = (clamp ((tmpvar_26 * xlv_TEXCOORD0.y), 0.0, 1.0) + (clamp (
+      (maskAlpha_3 * tmpvar_26)
+    , 0.0, 1.0) * (1.0 - xlv_TEXCOORD0.y)));
+  };
+  highp float tmpvar_27;
+  tmpvar_27 = min (1.0, pow (tmpvar_17, 12.0));
+  highp vec3 tmpvar_28;
+  tmpvar_28 = ((clamp (sun_4, 0.0, 1.0) + (
+    (color_7 * tmpvar_27)
+   + 
+    ((color_7 * (1.0 - tmpvar_27)) * dot (tmpvar_16.xyz, xlv_TEXCOORD3))
+  )) + clamp ((tmpvar_19 * _SparklingSpecularScale), 0.0, 1.0));
+  lowp float tmpvar_29;
+  highp float tmpvar_30;
+  tmpvar_30 = max (float((texture2DProj (_ShadowMapTexture, xlv_TEXCOORD6).x > 
+    (xlv_TEXCOORD6.z / xlv_TEXCOORD6.w)
+  )), _LightShadowData.x);
+  tmpvar_29 = tmpvar_30;
+  highp vec4 tmpvar_31;
+  tmpvar_31.xyz = ((tmpvar_28 * 0.6) + ((tmpvar_28 * 0.4) * tmpvar_29));
+  tmpvar_31.w = alpha_2;
+  retColor_1.w = tmpvar_31.w;
+  retColor_1.xyz = mix (unity_FogColor.xyz, tmpvar_31.xyz, vec3(clamp (xlv_TEXCOORD7, 0.0, 1.0)));
+  gl_FragData[0] = retColor_1;
+}
