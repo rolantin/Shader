@@ -66,9 +66,15 @@ const float PI = 3.14159265359;
 float _Glossing;
 
 
+
 float pow2(float x){
   
 return x*x;
+}
+
+float Pow5(float x ){
+
+  return x*x*x*x*x;
 }
 
 //UE Define
@@ -475,15 +481,15 @@ float3 SBL(samplerCUBE CubeTexIBL,float3 normalDirection , float3 MetallicTex){
 
 //PBR SP
 float3 PBR_SP(float3 normalDirection ,float3 lightDirection ,float3 Light,
-              float4 MetallicTex, float3 diffuseColor ,out float3 diffusefinalColor)
+            float4 MetallicTex, float3 diffuseColor ,out float3 diffusefinalColor)
 {
-    //diffusefinalColor = diffuseColor;
+  //diffusefinalColor = diffuseColor;
 
-    //diffusefinalColor = float3(1,1,1);
-    float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - posWorld);
+  //diffusefinalColor = float3(1,1,1);
+  float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - posWorld);
     float3 halfDirection = normalize(viewDirection+lightDirection);
     float3 viewReflectDirection = reflect( -viewDirection, normalDirection );
-    float NdotL = saturate(dot(normalDirection, lightDirection));
+  float NdotL = saturate(dot(normalDirection, lightDirection));
     float LdotH = saturate(dot(lightDirection, halfDirection));
     
     // input metallic map (R - channel is metallic )
@@ -498,9 +504,9 @@ float3 PBR_SP(float3 normalDirection ,float3 lightDirection ,float3 Light,
     diffusefinalColor = RDiffuseAndSpecularFromMetallic( diffuseColor, specularColor, specularColor, specularMonochrome );
     specularMonochrome = 1.0-specularMonochrome;
  //    specularColor = lerp(unity_ColorSpaceDielectricSpec.rgb, diffuseColor, specularColor);
-    // specularMonochrome = OneMinusReflectivityFromMetallic(specularColor);
-    // diffusefinalColor = diffuseColor * ( specularMonochrome);
-    
+  // specularMonochrome = OneMinusReflectivityFromMetallic(specularColor);
+  // diffusefinalColor = diffuseColor * ( specularMonochrome);
+  
  // return float4(diffusefinalColor,.);
 
 
@@ -514,7 +520,7 @@ float3 PBR_SP(float3 normalDirection ,float3 lightDirection ,float3 Light,
 
     float specularPBL = (visTerm*normTerm) * UNITY_PI;
                 #ifdef UNITY_COLORSPACE_GAMMA
-                    specularPBL = pow2(max(1e-4h, specularPBL));
+                    specularPBL = sqrt(max(1e-4h, specularPBL));
                 #endif
                 specularPBL = max(0, specularPBL * NdotL);
                 #if defined(_SPECULARHIGHLIGHTS_OFF)
@@ -889,6 +895,7 @@ float GGXNormalDistribution(float roughness, float NdotH)
 
 }
 
+//UE4 采用GGX / Trowbridge-Reitz模型
 float TrowbridgeReitzNormalDistribution(float NdotH, float roughness){
     float roughnessSqr = roughness*roughness;
     float Distribution = NdotH*NdotH * (roughnessSqr-1.0) + 1.0;
@@ -1008,6 +1015,8 @@ float GGXGeometricShadowingFunction (float NdotL, float NdotV, float roughness){
   return Gs;
 }
 
+
+
 float SchlickGeometricShadowingFunction (float NdotL, float NdotV, float roughness)
 {
     float roughnessSqr = roughness*roughness;
@@ -1034,9 +1043,31 @@ float SchlickGGXGeometricShadowingFunction (float NdotL, float NdotV, float roug
   return Gs;
 }
 
-//--------------------------
+//--------------------------------------------------Wind---------------------------------------------
 
+fixed4 TreeWind(fixed4 vertexColor,fixed3 normaldir,fixed leafWindPower,fixed4 leafWindDir,fixed leafWindAtt,fixed trunkWindPower,fixed trunkWindAtt){
+    fixed a = (vertexColor.r * PI +_Time.y*leafWindPower);
+    fixed b = sin (a *3)*0.2 + sin(a);
+    fixed k = cos( a *5);
+    fixed d = b -k ;
+    fixed4 e = vertexColor.r * d *  (normalize(leafWindDir +  normaldir.xyzz)) * leafWindAtt;
+    fixed f = _Time.y * trunkWindPower;
+    fixed g = sin (f) *  trunkWindAtt * vertexColor.a;
+    fixed h = cos (f) * 0.5 * trunkWindAtt * vertexColor.a;
+    fixed3 i = fixed3(g,0,h);
+    fixed4 j = e + i.xyzz;
+    return j;
+  }
 
+  float4 VertexBillBoard(float4 vertex){
+    float4 ori=mul(UNITY_MATRIX_MV,float4(0,0,0,1));
+    float4 vt=vertex;
+    vt.y=vt.z;
+    vt.z=0;
+    vt.xyz+=ori.xyz;
+    vertex=mul(UNITY_MATRIX_P,vt) ;
+    return vertex;
+  }
 
 #endif
 

@@ -1,0 +1,381 @@
+﻿#version 300 es
+
+uniform     mediump vec4 unity_SHBr;
+uniform     mediump vec4 unity_SHBg;
+uniform     mediump vec4 unity_SHBb;
+uniform     mediump vec4 unity_SHC;
+uniform     vec4 hlslcc_mtx4x4unity_ObjectToWorld[4];
+uniform     vec4 hlslcc_mtx4x4unity_WorldToObject[4];
+uniform     vec4 unity_WorldTransformParams;
+uniform     vec4 hlslcc_mtx4x4unity_MatrixVP[4];
+
+
+in highp vec4 in_POSITION0;
+in highp vec4 in_TEXCOORD0;
+in highp vec4 in_TEXCOORD1;
+in mediump vec3 in_NORMAL0;
+in mediump vec4 in_TANGENT0;
+in mediump vec4 in_COLOR0;
+
+
+
+out mediump vec4 vs_TEXCOORD0;
+out highp vec4 vs_TEXCOORD1;
+out mediump vec4 vs_TEXCOORD2;
+out highp vec4 vs_TEXCOORD3;
+out highp vec4 vs_TEXCOORD4;
+out mediump vec3 vs_TEXCOORD5;
+out mediump vec3 vs_TEXCOORD6;
+out mediump vec3 vs_TEXCOORD7;
+
+vec3 u_xlat0;
+vec4 u_xlat1;
+mediump float u_xlat16_1;
+vec4 u_xlat2;
+mediump vec4 u_xlat16_2;
+mediump vec3 u_xlat16_3;
+vec3 u_xlat4;
+float u_xlat15;
+
+void main()
+{
+    u_xlat0.x = dot(in_NORMAL0.xyz, hlslcc_mtx4x4unity_WorldToObject[0].xyz);
+    u_xlat0.y = dot(in_NORMAL0.xyz, hlslcc_mtx4x4unity_WorldToObject[1].xyz);
+    u_xlat0.z = dot(in_NORMAL0.xyz, hlslcc_mtx4x4unity_WorldToObject[2].xyz);
+    u_xlat15 = dot(u_xlat0.xyz, u_xlat0.xyz);
+    u_xlat15 = inversesqrt(u_xlat15);
+    u_xlat0.xyz = vec3(u_xlat15) * u_xlat0.xyz;
+    u_xlat16_1 = u_xlat0.y * u_xlat0.y;
+    u_xlat16_1 = u_xlat0.x * u_xlat0.x + (-u_xlat16_1);
+    u_xlat16_2 = u_xlat0.yzzx * u_xlat0.xyzz;
+    u_xlat16_3.x = dot(unity_SHBr, u_xlat16_2);
+    u_xlat16_3.y = dot(unity_SHBg, u_xlat16_2);
+    u_xlat16_3.z = dot(unity_SHBb, u_xlat16_2);
+    vs_TEXCOORD0.xyz = unity_SHC.xyz * vec3(u_xlat16_1) + u_xlat16_3.xyz;
+    vs_TEXCOORD0.w = 0.0;
+    vs_TEXCOORD1 = vec4(0.0, 0.0, 0.0, 0.0);
+    u_xlat1 = in_POSITION0.yyyy * hlslcc_mtx4x4unity_ObjectToWorld[1];
+    u_xlat1 = hlslcc_mtx4x4unity_ObjectToWorld[0] * in_POSITION0.xxxx + u_xlat1;
+    u_xlat1 = hlslcc_mtx4x4unity_ObjectToWorld[2] * in_POSITION0.zzzz + u_xlat1;
+    u_xlat2 = u_xlat1 + hlslcc_mtx4x4unity_ObjectToWorld[3];
+    vs_TEXCOORD3.xyz = hlslcc_mtx4x4unity_ObjectToWorld[3].xyz * in_POSITION0.www + u_xlat1.xyz;
+    u_xlat1 = u_xlat2.yyyy * hlslcc_mtx4x4unity_MatrixVP[1];
+    u_xlat1 = hlslcc_mtx4x4unity_MatrixVP[0] * u_xlat2.xxxx + u_xlat1;
+    u_xlat1 = hlslcc_mtx4x4unity_MatrixVP[2] * u_xlat2.zzzz + u_xlat1;
+    gl_Position = hlslcc_mtx4x4unity_MatrixVP[3] * u_xlat2.wwww + u_xlat1;
+    u_xlat4.xyz = in_COLOR0.xyz * vec3(0.305306017, 0.305306017, 0.305306017) + vec3(0.682171106, 0.682171106, 0.682171106);
+    u_xlat4.xyz = in_COLOR0.xyz * u_xlat4.xyz + vec3(0.0125228781, 0.0125228781, 0.0125228781);
+    u_xlat4.xyz = u_xlat4.xyz * in_COLOR0.xyz;
+    vs_TEXCOORD2.xyz = u_xlat4.xyz;
+    vs_TEXCOORD2.w = in_COLOR0.w;
+    vs_TEXCOORD3.w = 0.0;
+    vs_TEXCOORD4.xy = in_TEXCOORD0.xy;
+    vs_TEXCOORD4.zw = in_TEXCOORD1.xy;
+    u_xlat4.xyz = in_TANGENT0.yyy * hlslcc_mtx4x4unity_ObjectToWorld[1].xyz;
+    u_xlat4.xyz = hlslcc_mtx4x4unity_ObjectToWorld[0].xyz * in_TANGENT0.xxx + u_xlat4.xyz;
+    u_xlat4.xyz = hlslcc_mtx4x4unity_ObjectToWorld[2].xyz * in_TANGENT0.zzz + u_xlat4.xyz;
+    u_xlat15 = dot(u_xlat4.xyz, u_xlat4.xyz);
+    u_xlat15 = inversesqrt(u_xlat15);
+    u_xlat4.xyz = vec3(u_xlat15) * u_xlat4.xyz;
+    vs_TEXCOORD5.xyz = u_xlat4.xyz;
+    u_xlat16_3.xyz = u_xlat0.zxy * u_xlat4.yzx;
+    u_xlat16_3.xyz = u_xlat0.yzx * u_xlat4.zxy + (-u_xlat16_3.xyz);
+    vs_TEXCOORD7.xyz = u_xlat0.xyz;
+    u_xlat0.x = in_TANGENT0.w * unity_WorldTransformParams.w;
+    vs_TEXCOORD6.xyz = u_xlat0.xxx * u_xlat16_3.xyz;
+    return;
+}
+//------------------------------------------------------------------------------------
+
+#version 300 es
+
+precision highp float;
+precision highp int;
+uniform     vec4 _Time;
+uniform     vec3 _WorldSpaceCameraPos;
+uniform     mediump vec4 _WorldSpaceLightPos0;
+uniform     mediump vec4 unity_SHAr;
+uniform     mediump vec4 unity_SHAg;
+uniform     mediump vec4 unity_SHAb;
+uniform     vec4 hlslcc_mtx4x4unity_WorldToShadow[16];
+uniform     mediump vec4 _LightShadowData;
+uniform     vec4 unity_ShadowFadeCenterAndType;
+uniform     vec4 hlslcc_mtx4x4unity_MatrixV[4];
+uniform     mediump vec4 unity_SpecCube0_HDR;
+uniform     mediump vec4 _LightColor0;
+uniform     mediump vec4 _Color;
+uniform     vec4 _MainTex_ST;
+uniform     vec2 _MainTexVelocity;
+uniform     float _MainTexUV;
+uniform     mediump float _BaseColorVertexTint;
+uniform     mediump float _Metal;
+uniform     mediump float _Specularity;
+uniform     mediump float _SpecularTint;
+uniform     mediump float _Roughness;
+uniform     mediump float _Occlusion;
+uniform     mediump float _BumpScale;
+uniform lowp sampler2D _MainTex;
+uniform lowp sampler2D _SpecTex;
+uniform lowp sampler2D _BumpMap;
+uniform lowp samplerCube unity_SpecCube0;
+uniform lowp sampler2DShadow hlslcc_zcmp_ShadowMapTexture;
+uniform lowp sampler2D _ShadowMapTexture;
+in mediump vec4 vs_TEXCOORD0;
+in mediump vec4 vs_TEXCOORD2;
+in highp vec4 vs_TEXCOORD3;
+in highp vec4 vs_TEXCOORD4;
+in mediump vec3 vs_TEXCOORD5;
+in mediump vec3 vs_TEXCOORD6;
+in mediump vec3 vs_TEXCOORD7;
+
+layout(location = 0) out mediump vec4 SV_Target0;
+vec2 u_xlat0;
+mediump vec4 u_xlat16_0;
+lowp vec4 u_xlat10_0;
+bool u_xlatb0;
+mediump vec4 u_xlat16_1;
+lowp vec3 u_xlat10_1;
+mediump vec4 u_xlat16_2;
+lowp vec4 u_xlat10_2;
+mediump vec4 u_xlat16_3;
+vec3 u_xlat4;
+vec3 u_xlat5;
+lowp vec4 u_xlat10_5;
+vec3 u_xlat6;
+mediump vec3 u_xlat16_6;
+mediump vec2 u_xlat16_7;
+mediump vec3 u_xlat16_8;
+mediump vec3 u_xlat16_9;
+mediump vec3 u_xlat16_10;
+mediump vec3 u_xlat16_11;
+mediump vec3 u_xlat16_12;
+mediump vec2 u_xlat16_13;
+float u_xlat14;
+mediump float u_xlat16_14;
+lowp float u_xlat10_14;
+mediump float u_xlat16_17;
+mediump float u_xlat16_19;
+mediump float u_xlat16_20;
+vec2 u_xlat28;
+mediump float u_xlat16_28;
+bool u_xlatb28;
+mediump float u_xlat16_31;
+mediump float u_xlat16_44;
+mediump float u_xlat16_45;
+mediump float u_xlat16_46;
+mediump float u_xlat16_47;
+mediump float u_xlat16_50;
+void main()
+{
+#ifdef UNITY_ADRENO_ES3
+    u_xlatb0 = !!(_MainTexUV<0.5);
+#else
+    u_xlatb0 = _MainTexUV<0.5;
+#endif
+    u_xlat0.xy = (bool(u_xlatb0)) ? vs_TEXCOORD4.xy : vs_TEXCOORD4.zw;
+    u_xlat28.xy = _MainTexVelocity.xy * _Time.yy + _MainTex_ST.zw;
+    u_xlat28.xy = u_xlat28.xy / _MainTex_ST.xy;
+    u_xlat0.xy = u_xlat28.xy + u_xlat0.xy;
+    u_xlat0.xy = u_xlat0.xy * _MainTex_ST.xy;
+    u_xlat10_1.xyz = texture(_BumpMap, u_xlat0.xy).xyz;
+    u_xlat16_2.xyz = u_xlat10_1.xyz * vec3(2.0, 2.0, 2.0) + vec3(-1.0, -1.0, -1.0);
+    u_xlat16_2.xy = u_xlat16_2.xy * vec2(vec2(_BumpScale, _BumpScale));
+    u_xlat16_3.xyz = u_xlat16_2.yyy * vs_TEXCOORD6.xyz;
+    u_xlat16_2.xyw = u_xlat16_2.xxx * vs_TEXCOORD5.xyz + u_xlat16_3.xyz;
+    u_xlat16_2.xyz = u_xlat16_2.zzz * vs_TEXCOORD7.xyz + u_xlat16_2.xyw;
+    u_xlat16_44 = dot(u_xlat16_2.xyz, u_xlat16_2.xyz);
+    u_xlat16_44 = inversesqrt(u_xlat16_44);
+    u_xlat16_1.xyz = vec3(u_xlat16_44) * u_xlat16_2.xyz;
+    u_xlat4.xyz = (-vs_TEXCOORD3.xyz) + _WorldSpaceCameraPos.xyz;
+    u_xlat28.x = dot(u_xlat4.xyz, u_xlat4.xyz);
+    u_xlat28.x = inversesqrt(u_xlat28.x);
+    u_xlat5.xyz = u_xlat28.xxx * u_xlat4.xyz;
+    u_xlat16_2.x = dot((-u_xlat5.xyz), u_xlat16_1.xyz);
+    u_xlat16_2.x = u_xlat16_2.x + u_xlat16_2.x;
+    u_xlat16_2.xyz = u_xlat16_1.xyz * (-u_xlat16_2.xxx) + (-u_xlat5.xyz);
+    u_xlat16_28 = dot(_WorldSpaceLightPos0.xyz, u_xlat16_2.xyz);
+    u_xlat16_6.xyz = vec3(u_xlat16_28) * u_xlat16_2.xyz + (-_WorldSpaceLightPos0.xyz);
+    u_xlat16_28 = dot(u_xlat16_6.xyz, u_xlat16_6.xyz);
+    u_xlat16_28 = inversesqrt(u_xlat16_28);
+    u_xlat16_7.xy = abs(_LightColor0.ww) * vec2(0.100000001, 0.0500000007);
+    u_xlat16_28 = u_xlat16_28 * u_xlat16_7.x;
+    u_xlat16_28 = min(u_xlat16_28, 1.0);
+    u_xlat16_6.xyz = u_xlat16_6.xyz * vec3(u_xlat16_28) + _WorldSpaceLightPos0.xyz;
+    u_xlat16_28 = dot(u_xlat16_6.xyz, u_xlat16_6.xyz);
+    u_xlat16_28 = inversesqrt(u_xlat16_28);
+    u_xlat16_3.xyz = u_xlat16_6.xyz * vec3(u_xlat16_28) + u_xlat5.xyz;
+    u_xlat16_6.xyz = vec3(u_xlat16_28) * u_xlat16_6.xyz;
+    u_xlat16_44 = dot(u_xlat16_1.xyz, u_xlat5.xyz);
+#ifdef UNITY_ADRENO_ES3
+    u_xlat16_44 = min(max(u_xlat16_44, 0.0), 1.0);
+#else
+    u_xlat16_44 = clamp(u_xlat16_44, 0.0, 1.0);
+#endif
+    u_xlat16_45 = dot(u_xlat16_3.xyz, u_xlat16_3.xyz);
+    u_xlat16_45 = inversesqrt(u_xlat16_45);
+    u_xlat16_3.xyz = vec3(u_xlat16_45) * u_xlat16_3.xyz;
+    u_xlat16_45 = dot(u_xlat16_1.xyz, u_xlat16_3.xyz);
+#ifdef UNITY_ADRENO_ES3
+    u_xlat16_45 = min(max(u_xlat16_45, 0.0), 1.0);
+#else
+    u_xlat16_45 = clamp(u_xlat16_45, 0.0, 1.0);
+#endif
+    u_xlat16_3.x = dot(u_xlat16_6.xyz, u_xlat16_3.xyz);
+#ifdef UNITY_ADRENO_ES3
+    u_xlat16_3.x = min(max(u_xlat16_3.x, 0.0), 1.0);
+#else
+    u_xlat16_3.x = clamp(u_xlat16_3.x, 0.0, 1.0);
+#endif
+    u_xlat16_17 = u_xlat16_45 * u_xlat16_45;
+    u_xlat10_5 = texture(_SpecTex, u_xlat0.xy);
+    u_xlat10_0.xyw = texture(_MainTex, u_xlat0.xy).xyz;
+    u_xlat16_31 = u_xlat10_5.w * _Roughness;
+    u_xlat16_46 = u_xlat16_31 * 0.949999988 + 0.0500000007;
+    u_xlat16_45 = u_xlat16_46 * u_xlat16_46;
+    u_xlat16_46 = u_xlat16_45 * u_xlat16_45 + -1.0;
+    u_xlat16_46 = u_xlat16_17 * u_xlat16_46 + 1.0;
+    u_xlat16_17 = u_xlat16_3.x * u_xlat16_3.x;
+    u_xlat16_8.x = u_xlat16_45 * u_xlat16_45;
+    u_xlat16_47 = (-u_xlat16_8.x) * 0.25 + 1.0;
+    u_xlat16_6.x = u_xlat16_8.x * 0.25;
+    u_xlat16_47 = u_xlat16_17 * u_xlat16_47 + u_xlat16_6.x;
+    u_xlat16_20 = u_xlat16_17 + u_xlat16_17;
+    u_xlat16_20 = u_xlat16_20 * u_xlat16_31 + -0.5;
+    u_xlat16_17 = u_xlat16_46 * u_xlat16_47;
+    u_xlat16_17 = u_xlat16_46 * u_xlat16_17;
+    u_xlat16_17 = u_xlat16_6.x / u_xlat16_17;
+    u_xlat16_46 = u_xlat10_5.y * 0.305306017 + 0.682171106;
+    u_xlat16_46 = u_xlat10_5.y * u_xlat16_46 + 0.0125228781;
+    u_xlat16_46 = u_xlat10_5.y * u_xlat16_46 + -1.0;
+    u_xlat16_46 = _Occlusion * u_xlat16_46 + 1.0;
+    u_xlat16_8.x = u_xlat16_44 + u_xlat16_46;
+    u_xlat16_19 = u_xlat16_8.x * u_xlat16_8.x + -1.0;
+    u_xlat16_19 = u_xlat16_46 + u_xlat16_19;
+#ifdef UNITY_ADRENO_ES3
+    u_xlat16_19 = min(max(u_xlat16_19, 0.0), 1.0);
+#else
+    u_xlat16_19 = clamp(u_xlat16_19, 0.0, 1.0);
+#endif
+    u_xlat16_17 = u_xlat16_17 * u_xlat16_19;
+    u_xlat16_28 = u_xlat16_7.y * u_xlat16_28 + u_xlat16_45;
+    u_xlat16_28 = min(u_xlat16_28, 1.0);
+    u_xlat16_28 = u_xlat16_45 / u_xlat16_28;
+    u_xlat16_45 = u_xlat16_28 * u_xlat16_28;
+#ifdef UNITY_ADRENO_ES3
+    u_xlatb28 = !!(0.0<_LightColor0.w);
+#else
+    u_xlatb28 = 0.0<_LightColor0.w;
+#endif
+    u_xlat28.x = (u_xlatb28) ? u_xlat16_45 : 0.0;
+    u_xlat16_17 = u_xlat28.x * u_xlat16_17;
+    u_xlat16_28 = u_xlat16_3.x * -5.55472994 + -6.98316002;
+    u_xlat16_28 = u_xlat16_3.x * u_xlat16_28;
+    u_xlat16_28 = exp2(u_xlat16_28);
+    u_xlat16_8.xyz = vs_TEXCOORD2.xyz + vec3(-1.0, -1.0, -1.0);
+    u_xlat16_8.xyz = vec3(_BaseColorVertexTint) * u_xlat16_8.xyz + vec3(1.0, 1.0, 1.0);
+    u_xlat16_8.xyz = u_xlat16_8.xyz * _Color.xyz;
+    u_xlat16_8.xyz = u_xlat10_0.xyw * u_xlat16_8.xyz;
+#ifdef UNITY_ADRENO_ES3
+    u_xlat16_8.xyz = min(max(u_xlat16_8.xyz, 0.0), 1.0);
+#else
+    u_xlat16_8.xyz = clamp(u_xlat16_8.xyz, 0.0, 1.0);
+#endif
+    u_xlat16_3.x = dot(u_xlat16_8.xyz, vec3(0.212599993, 0.715200007, 0.0722000003));
+    u_xlat16_0.x = max(u_xlat16_3.x, 9.99999997e-007);
+    u_xlat16_0.xyw = u_xlat16_8.xyz / u_xlat16_0.xxx;
+    u_xlat16_9.xyz = u_xlat16_0.xyw + vec3(-1.0, -1.0, -1.0);
+    u_xlat16_9.xyz = vec3(vec3(_SpecularTint, _SpecularTint, _SpecularTint)) * u_xlat16_9.xyz + vec3(1.0, 1.0, 1.0);
+    u_xlat16_3.xw = vec2(u_xlat10_5.x * float(_Metal), u_xlat10_5.z * float(_Specularity));
+    u_xlat16_0.x = (-_Metal) * u_xlat10_5.x + 1.0;
+    u_xlat16_10.xyz = u_xlat16_0.xxx * u_xlat16_8.xyz;
+    u_xlat16_45 = u_xlat16_3.w * 0.0799999982;
+    u_xlat16_8.xyz = (-vec3(u_xlat16_45)) * u_xlat16_9.xyz + u_xlat16_8.xyz;
+    u_xlat16_9.xyz = u_xlat16_9.xyz * vec3(u_xlat16_45);
+    u_xlat16_8.xyz = u_xlat16_3.xxx * u_xlat16_8.xyz + u_xlat16_9.xyz;
+    u_xlat16_9.xyz = (-u_xlat16_8.xyz) + vec3(1.0, 1.0, 1.0);
+    u_xlat16_9.xyz = vec3(u_xlat16_28) * u_xlat16_9.xyz + u_xlat16_8.xyz;
+    u_xlat16_3.xyw = vec3(u_xlat16_17) * u_xlat16_9.xyz;
+    u_xlat16_50 = dot(u_xlat16_1.xyz, _WorldSpaceLightPos0.xyz);
+#ifdef UNITY_ADRENO_ES3
+    u_xlat16_50 = min(max(u_xlat16_50, 0.0), 1.0);
+#else
+    u_xlat16_50 = clamp(u_xlat16_50, 0.0, 1.0);
+#endif
+    u_xlat16_0.x = u_xlat16_50 * -5.55472994 + -6.98316002;
+    u_xlat16_0.x = u_xlat16_50 * u_xlat16_0.x;
+    u_xlat16_0.x = exp2(u_xlat16_0.x);
+    u_xlat16_0.x = u_xlat16_0.x * u_xlat16_20 + 1.0;
+    u_xlat16_14 = u_xlat16_44 * -5.55472994 + -6.98316002;
+    u_xlat16_14 = u_xlat16_44 * u_xlat16_14;
+    u_xlat16_28 = u_xlat16_44 * -9.27999973;
+    u_xlat16_28 = exp2(u_xlat16_28);
+    u_xlat16_14 = exp2(u_xlat16_14);
+    u_xlat16_14 = u_xlat16_14 * u_xlat16_20 + 1.0;
+    u_xlat16_44 = u_xlat16_14 * u_xlat16_0.x;
+    u_xlat16_3.xyw = u_xlat16_10.xyz * vec3(u_xlat16_44) + u_xlat16_3.xyw;
+    u_xlat6.x = hlslcc_mtx4x4unity_MatrixV[0].z;
+    u_xlat6.y = hlslcc_mtx4x4unity_MatrixV[1].z;
+    u_xlat6.z = hlslcc_mtx4x4unity_MatrixV[2].z;
+    u_xlat0.x = dot(u_xlat4.xyz, u_xlat6.xyz);
+    u_xlat4.xyz = vs_TEXCOORD3.xyz + (-unity_ShadowFadeCenterAndType.xyz);
+    u_xlat14 = dot(u_xlat4.xyz, u_xlat4.xyz);
+    u_xlat14 = sqrt(u_xlat14);
+    u_xlat14 = (-u_xlat0.x) + u_xlat14;
+    u_xlat0.x = unity_ShadowFadeCenterAndType.w * u_xlat14 + u_xlat0.x;
+    u_xlat0.x = u_xlat0.x * _LightShadowData.z + _LightShadowData.w;
+#ifdef UNITY_ADRENO_ES3
+    u_xlat0.x = min(max(u_xlat0.x, 0.0), 1.0);
+#else
+    u_xlat0.x = clamp(u_xlat0.x, 0.0, 1.0);
+#endif
+    u_xlat4.xyz = vs_TEXCOORD3.yyy * hlslcc_mtx4x4unity_WorldToShadow[1].xyz;
+    u_xlat4.xyz = hlslcc_mtx4x4unity_WorldToShadow[0].xyz * vs_TEXCOORD3.xxx + u_xlat4.xyz;
+    u_xlat4.xyz = hlslcc_mtx4x4unity_WorldToShadow[2].xyz * vs_TEXCOORD3.zzz + u_xlat4.xyz;
+    u_xlat4.xyz = u_xlat4.xyz + hlslcc_mtx4x4unity_WorldToShadow[3].xyz;
+    vec3 txVec0 = vec3(u_xlat4.xy,u_xlat4.z);
+    u_xlat10_14 = textureLod(hlslcc_zcmp_ShadowMapTexture, txVec0, 0.0);
+    u_xlat16_44 = (-_LightShadowData.x) + 1.0;
+    u_xlat16_44 = u_xlat10_14 * u_xlat16_44 + _LightShadowData.x;
+    u_xlat16_44 = u_xlat0.x + u_xlat16_44;
+#ifdef UNITY_ADRENO_ES3
+    u_xlat16_44 = min(max(u_xlat16_44, 0.0), 1.0);
+#else
+    u_xlat16_44 = clamp(u_xlat16_44, 0.0, 1.0);
+#endif
+    u_xlat16_44 = u_xlat16_50 * u_xlat16_44;
+    u_xlat16_3.xyw = u_xlat16_3.xyw * vec3(u_xlat16_44);
+    u_xlat16_1.w = 1.0;
+    u_xlat16_9.x = dot(unity_SHAr, u_xlat16_1);
+    u_xlat16_9.y = dot(unity_SHAg, u_xlat16_1);
+    u_xlat16_9.z = dot(unity_SHAb, u_xlat16_1);
+    u_xlat16_9.xyz = u_xlat16_9.xyz + vs_TEXCOORD0.xyz;
+    u_xlat16_9.xyz = max(u_xlat16_9.xyz, vec3(0.0, 0.0, 0.0));
+    u_xlat16_0.xyw = log2(u_xlat16_9.xyz);
+    u_xlat16_0.xyw = u_xlat16_0.xyw * vec3(0.416666657, 0.416666657, 0.416666657);
+    u_xlat16_0.xyw = exp2(u_xlat16_0.xyw);
+    u_xlat16_0.xyw = u_xlat16_0.xyw * vec3(1.05499995, 1.05499995, 1.05499995) + vec3(-0.0549999997, -0.0549999997, -0.0549999997);
+    u_xlat16_0.xyw = max(u_xlat16_0.xyw, vec3(0.0, 0.0, 0.0));
+    u_xlat16_9.xyz = vec3(u_xlat16_46) * u_xlat16_0.xyw;
+    u_xlat16_11.xyz = u_xlat16_8.xyz * u_xlat16_9.xyz;
+    u_xlat16_44 = (-u_xlat16_31) * 0.699999988 + 1.70000005;
+    u_xlat16_44 = u_xlat16_44 * u_xlat16_31;
+    u_xlat16_1 = vec4(u_xlat16_31) * vec4(-1.0, -0.0274999999, -0.572000027, 0.0219999999) + vec4(1.0, 0.0425000004, 1.03999996, -0.0399999991);
+    u_xlat16_44 = u_xlat16_44 * 6.0;
+    u_xlat10_2 = textureLod(unity_SpecCube0, u_xlat16_2.xyz, u_xlat16_44);
+    u_xlat16_31 = u_xlat10_2.w + -1.0;
+    u_xlat16_31 = unity_SpecCube0_HDR.w * u_xlat16_31 + 1.0;
+    u_xlat16_31 = u_xlat16_31 * unity_SpecCube0_HDR.x;
+    u_xlat16_12.xyz = u_xlat10_2.xyz * vec3(u_xlat16_31);
+    u_xlat16_31 = u_xlat16_1.x * u_xlat16_1.x;
+    u_xlat16_0.x = min(u_xlat16_28, u_xlat16_31);
+    u_xlat16_0.x = u_xlat16_0.x * u_xlat16_1.x + u_xlat16_1.y;
+    u_xlat16_13.xy = u_xlat16_0.xx * vec2(-1.03999996, 1.03999996) + u_xlat16_1.zw;
+    u_xlat16_8.xyz = u_xlat16_8.xyz * u_xlat16_13.xxx + u_xlat16_13.yyy;
+    u_xlat16_8.xyz = u_xlat16_12.xyz * u_xlat16_8.xyz + (-u_xlat16_11.xyz);
+    u_xlat16_8.xyz = vec3(u_xlat16_19) * u_xlat16_8.xyz + u_xlat16_11.xyz;
+    u_xlat16_8.xyz = u_xlat16_9.xyz * u_xlat16_10.xyz + u_xlat16_8.xyz;
+    u_xlat16_3.xyz = _LightColor0.xyz * u_xlat16_3.xyw + u_xlat16_8.xyz;
+    SV_Target0.xyz = min(u_xlat16_3.xyz, vec3(100.0, 100.0, 100.0));
+    SV_Target0.w = 1.0;
+    return;
+}
