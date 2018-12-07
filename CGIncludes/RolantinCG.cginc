@@ -189,8 +189,6 @@ float3 Diffuse_Gotanda( float3 DiffuseColor, float Roughness, float NoV, float N
 
 
 
-
-
 //__________________________________________________________________NDF法线分布函数(NDF)_______________________________________________________________________
 
 
@@ -717,8 +715,12 @@ float3 MatCap(float3 VertexNormal){
 }
 
 
-float4 ColorSpace(float4 col){
-    return pow(col , lerp (1/1.2, 1 / 2.2 , _Gama ));
+//float4 ColorSpace(float4 col){
+  //  return pow(col , lerp (1/1.2, 1 / 2.2 , _Gama ));
+//}
+
+float3 GammaCorrection(float3 finalcolor,float gama){
+  return pow(finalcolor,1/gama);
 }
 
 //———————————————————————————————————————————————————————————————TOOL——————————————————————————————————————————————————————————
@@ -806,7 +808,7 @@ float SphericalGaussianFresnelFunction(float LdotH,float SpecularColor)
 //__________________________________________________________________Fresbel
 //u3d Schlick Fresnel
 fixed3 F_Schlick_U3D(fixed NdotV,fixed3 F0){
-   return pow(1.0-max(0,NdotV),F0);
+   return F0+ (1 -F0) *pow(1.0-max(NdotV,0),5);
   //return F0 + (1 -F0) *pow (1 -  NdotV,F0);
 
 }
@@ -846,9 +848,7 @@ float F0 (float NdotL, float NdotV, float LdotH, float roughness){
 
 
 
-
-//-----------------------------------------------
-//Normal Distribution Functions
+// ▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆ PBR_D-Normal Distribution Functions ▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆
 
 float BlinnPhongNormalDistribution(float NdotH, float specularpower, float speculargloss){
     float Distribution = pow(max(0,NdotH),speculargloss) * specularpower;
@@ -857,12 +857,10 @@ float BlinnPhongNormalDistribution(float NdotH, float specularpower, float specu
 }
 
 float BlinnPhongU3D(float NdotH, float specularpower, float speculargloss){
-
     float Distribution = pow(max(0,NdotH),speculargloss) * specularpower;
     // Distribution *= (2+specularpower) / (2*3.1415926535);
     return Distribution;
 }
-
 
 
 float PhongNormalDistribution(float RdotV, float specularpower, float speculargloss){
@@ -918,12 +916,10 @@ float WardAnisotropicNormalDistribution(float anisotropic, float NdotL, float Nd
     Distribution *= exp(exponent);
     return Distribution;
 }
-//--------------------------
 
 
+// ▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆ PBR_G-Geometric Shadowing Functions ▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆
 
-//-----------------------------------------------
-//Geometric Shadowing Functions
 
 float ImplicitGeometricShadowingFunction (float NdotL, float NdotV){
   float Gs =  (NdotL*NdotV);       
@@ -1042,6 +1038,21 @@ float SchlickGGXGeometricShadowingFunction (float NdotL, float NdotV, float roug
   float Gs =  (SmithL * SmithV);
   return Gs;
 }
+
+
+float GeometrySchlickGGX(float NdotV, float k){
+    float nom   = NdotV;
+    float denom = NdotV * (1.0 - k) + k;
+    return nom / denom;
+}
+
+float G_Func(float NdotL, float NdotV, float roughness) {
+    float k = (roughness + 1) * (roughness + 1) * 0.125;
+    float ggx1 = GeometrySchlickGGX(NdotV, k);
+    float ggx2 = GeometrySchlickGGX(NdotL, k);
+    return ggx1 * ggx2;
+}
+
 
 //--------------------------------------------------Wind---------------------------------------------
 

@@ -1,0 +1,27 @@
+newmtl Glass Simple
+map_Ka mat0_c.jpg
+map_Kd mat0_c.jpg
+newmtl NewMat02
+map_Ka mat1_c.jpg
+map_Kd mat1_c.jpg
+newmtl Quixel Steel
+map_Ka mat2_c.jpg
+map_Kd mat2_c.jpg
+newmtl body
+map_Ka mat3_c.jpg
+map_Kd mat3_c.jpg
+newmtl head FIXED
+map_Ka mat4_c.jpg
+map_Kd mat4_c.jpg
+newmtl helmet
+map_Ka mat5_c.jpg
+map_Kd mat5_c.jpg
+newmtl material0
+map_Ka mat6_c.jpg
+map_Kd mat6_c.jpg
+newmtl pistols
+map_Ka mat7_c.jpg
+map_Kd mat7_c.jpg
+newmtl platform
+map_Ka mat0_c.jpg
+map_Kd mat0_c.jpg

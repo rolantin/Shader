@@ -1,0 +1,209 @@
+fileFormatVersion: 2
+guid: 28306c670d2726340a494e4e3a89fb7f
+timeCreated: 1544061898
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: mesh0.dat.desirefx.me_
+    100002: mesh1.dat.desirefx.me_
+    100004: mesh10.dat.desirefx.me_
+    100006: mesh11.dat.desirefx.me_
+    100008: mesh2.dat.desirefx.me_
+    100010: mesh3.dat.desirefx.me_
+    100012: mesh4.dat.desirefx.me_
+    100014: mesh5.dat.desirefx.me_
+    100016: mesh6.dat.desirefx.me_
+    100018: mesh7.dat.desirefx.me_
+    100020: mesh8.dat.desirefx.me_
+    100022: mesh9.dat.desirefx.me_
+    100024: //RootNode
+    100026: Text001
+    100028: Text002
+    100030: Text003
+    400000: mesh0.dat.desirefx.me_
+    400002: mesh1.dat.desirefx.me_
+    400004: mesh10.dat.desirefx.me_
+    400006: mesh11.dat.desirefx.me_
+    400008: mesh2.dat.desirefx.me_
+    400010: mesh3.dat.desirefx.me_
+    400012: mesh4.dat.desirefx.me_
+    400014: mesh5.dat.desirefx.me_
+    400016: mesh6.dat.desirefx.me_
+    400018: mesh7.dat.desirefx.me_
+    400020: mesh8.dat.desirefx.me_
+    400022: mesh9.dat.desirefx.me_
+    400024: //RootNode
+    400026: Text001
+    400028: Text002
+    400030: Text003
+    2100000: Quixel Steel
+    2100002: platform
+    2100004: material0
+    2100006: Glass Simple
+    2100008: pistols
+    2100010: helmet
+    2100012: body
+    2100014: NewMat02
+    2100016: head FIXED
+    2300000: mesh0.dat.desirefx.me_
+    2300002: mesh1.dat.desirefx.me_
+    2300004: mesh10.dat.desirefx.me_
+    2300006: mesh11.dat.desirefx.me_
+    2300008: mesh2.dat.desirefx.me_
+    2300010: mesh3.dat.desirefx.me_
+    2300012: mesh4.dat.desirefx.me_
+    2300014: mesh5.dat.desirefx.me_
+    2300016: mesh6.dat.desirefx.me_
+    2300018: mesh7.dat.desirefx.me_
+    2300020: mesh8.dat.desirefx.me_
+    2300022: mesh9.dat.desirefx.me_
+    3300000: mesh0.dat.desirefx.me_
+    3300002: mesh1.dat.desirefx.me_
+    3300004: mesh10.dat.desirefx.me_
+    3300006: mesh11.dat.desirefx.me_
+    3300008: mesh2.dat.desirefx.me_
+    3300010: mesh3.dat.desirefx.me_
+    3300012: mesh4.dat.desirefx.me_
+    3300014: mesh5.dat.desirefx.me_
+    3300016: mesh6.dat.desirefx.me_
+    3300018: mesh7.dat.desirefx.me_
+    3300020: mesh8.dat.desirefx.me_
+    3300022: mesh9.dat.desirefx.me_
+    4300000: mesh0.dat.desirefx.me_
+    4300002: mesh1.dat.desirefx.me_
+    4300004: mesh2.dat.desirefx.me_
+    4300006: mesh3.dat.desirefx.me_
+    4300008: mesh4.dat.desirefx.me_
+    4300010: mesh5.dat.desirefx.me_
+    4300012: mesh6.dat.desirefx.me_
+    4300014: mesh7.dat.desirefx.me_
+    4300016: mesh8.dat.desirefx.me_
+    4300018: mesh9.dat.desirefx.me_
+    4300020: mesh10.dat.desirefx.me_
+    4300022: mesh11.dat.desirefx.me_
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass Simple
+    second: {fileID: 2100000, guid: f5f22e9fc80b41948a0bbb2b3f75a016, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: NewMat02
+    second: {fileID: 2100000, guid: ca0b7d59a1526194ba280ac09f9f80b8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Quixel Steel
+    second: {fileID: 2100000, guid: ab3f4cbd538617244bba60f60e1b57a2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: body
+    second: {fileID: 2100000, guid: 60ec5689b54b5e149a041a90fdf8395d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: head FIXED
+    second: {fileID: 2100000, guid: e073dd595946a0646a5e5daf232d675d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: helmet
+    second: {fileID: 2100000, guid: 7e76c3035d631d24a9a1c30b0d755875, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material0
+    second: {fileID: 2100000, guid: 966ac0942a531c64d8aaf908e49fb610, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pistols
+    second: {fileID: 2100000, guid: d4435ae8b21bde74fad554e5d63e04ed, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: platform
+    second: {fileID: 2100000, guid: 8510724b0bbae9442b3e4fcff96610c4, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
