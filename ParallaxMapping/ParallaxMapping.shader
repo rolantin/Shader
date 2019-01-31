@@ -106,9 +106,11 @@
 		     	float2 Offset49 = ( ( tex2D( _HeightMap, Offset4 ).r - 1 ) * i.viewDir.xy * _Parallax ) + Offset4;
 			    float2 Offset52 = ( ( tex2D( _HeightMap, Offset49 ).r - 1 ) * i.viewDir.xy * _Parallax ) + Offset49;
 			    float2 Offset54 = ( ( tex2D( _HeightMap, Offset52 ).r - 1 ) * i.viewDir.xy * _Parallax ) + Offset52;
+			    float2 Offset56 = ( ( tex2D( _HeightMap, Offset54 ).r - 1 ) * i.viewDir.xy * _Parallax ) + Offset54;
+			    float2	Offset13 = Offset56;
 
-			     float4 diffuse_var = tex2D(_Albedo,Offset54);
-			     float3 normal_var = UnpackNormal(tex2D(_Normal,Offset54));
+			     float4 diffuse_var = tex2D(_Albedo,Offset13);
+			     float3 normal_var = UnpackNormal(tex2D(_Normal,Offset13));
 
 			   
 			       float3 normalDirection = normalize(mul( normal_var, tangentTransform ));

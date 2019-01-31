@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: material1
+  m_Shader: {fileID: 4800000, guid: f5f8b95b27cc45c429ab0ea7f0bf2f9f, type: 3}
+  m_ShaderKeywords: _FRESNELMODEL_SCHICHU3D _GEOSHADOWMODEL_MODIFIEDKELEMEN _METALLICCHANNEL_GLOSS_R
+    _METALLICCHANNEL_METALLIC_R _NORMALDISTMODEL_TROWBRIDGEREITZ _SMITHGEOSHADOWMODEL_SCHLICKBECKMAN
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: e6423217356f55843bdc4da78c0a85ff, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 2800000, guid: 7df704782f5346b4992335ff7b9fe3c5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0.01}
+    - _GlossMap:
+        m_Texture: {fileID: 2800000, guid: 35227ebfa21315e41a5666558c7ea9a8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _IBL:
+        m_Texture: {fileID: 8900000, guid: bb8723af4a282ac42b2a16071b35eb81, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 7e981cd111914cd41a2a893d96db70ba, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicMap:
+        m_Texture: {fileID: 2800000, guid: e2f0fade7ad1bff4b99d085882c3b259, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SPL:
+        m_Texture: {fileID: 8900000, guid: 01bad46da227c4146b68c19ee8633e57, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - IBL_Blur: 0
+    - IBL_Intensity: 0
+    - SBL_Intensity: 1
+    - _Anisotropic: 0
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _ENABLE_D: 0
+    - _ENABLE_F: 0
+    - _ENABLE_G: 0
+    - _ENABLE_GAMMA: 0
+    - _ENABLE_NDF: 0
+    - _EmissionIntensity: 0.18
+    - _FresnelModel: 3
+    - _GeoShadowModel: 5
+    - _GlossMapScale: 1
+    - _Glossiness: 0.923
+    - _GlossyReflections: 1
+    - _Ior: 1
+    - _Metallic: 0
+    - _MetallicChannel: 0
+    - _Mode: 0
+    - _NormalDistModel: 5
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _SmithGeoShadowModel: 5
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SpecularPower: 1
+    - _SpecularRange: 40
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _UnityLightingContribution: 1
+    - _ZWrite: 1
+    - _gama: 2.2
+    m_Colors:
+    - _AmbientLight: {r: 0.36186203, g: 0.38694668, b: 0.50735295, a: 1}
+    - _Color: {r: 0.7941176, g: 0.7941176, b: 0.7941176, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
+    - _ExposeColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}

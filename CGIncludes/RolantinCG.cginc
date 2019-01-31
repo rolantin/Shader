@@ -66,6 +66,19 @@ const float PI = 3.14159265359;
 float _Glossing;
 
 
+struct DirectionLight {
+  vec3 Color;
+  vec3 Direction;
+};
+
+uniform DirectionLight u_DirectionLight;
+
+void CopyColor()
+{
+  u_DirectionLight.Color = LightColor0;
+  u_DirectionLight.Direction = LightDir0;
+}
+
 
 float pow2(float x){
   

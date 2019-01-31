@@ -128,9 +128,9 @@ Shader "Rolan/Human-Lieguo" {
                 float3 normalDirection = normalize(mul(normalLocal, tangentTransform)); // Perturbed normals
                 float3 BacknormalDirection = -normalDirection; // Perturbed normals
                 float3 viewReflectDirection = reflect( - viewDirection, normalDirection);
-                float4 _MainTex_var = ColorSpace (tex2D(_MainTex, TRANSFORM_TEX(i.uv0, _MainTex)));
+                float3 _MainTex_var = GammaCorrection(tex2D(_MainTex, TRANSFORM_TEX(i.uv0, _MainTex)).rgb,1);
                 
-                clip(_MainTex_var.a - 0.5 *_Cutoff );
+                clip(_MainTex_var.r - 0.5 *_Cutoff );
 
 ////// Lighting:
 
